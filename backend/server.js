@@ -15,7 +15,7 @@ app.use((req, res, next) =>{
 
 
 // routes
-app.use('/api/workouts', workoutRoutes )
+app.use('/api/workouts', workoutRoutes);
 
 // listen for requests
 app.listen(process.env.PORT, ()=> {
