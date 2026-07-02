@@ -41,4 +41,4 @@ const createWorkout = async (req, res) => {
 
 // update a workout
 
-module.exports = { createWorkout };
+module.exports = { createWorkout, getWorkout, getWorkouts };
