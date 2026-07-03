@@ -9,11 +9,11 @@ router.get("/:id", getWorkout);
 
 router.post("/", createWorkout )
 
-router.delete("/", (req, res) => {
+router.delete("/:id", (req, res) => {
   res.json({ mssg: "Delete a single workout" });
 });
 
-router.patch("/", (req, res) => {
+router.patch("/:id", (req, res) => {
   res.json({ mssg: "Update a single workout" });
 });
 
