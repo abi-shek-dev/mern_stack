@@ -3,6 +3,7 @@ const dns = require('dns')
 dns.setServers(['8.8.8.8', '1.1.1.1'])
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require("cors")
 
 const workoutRoutes = require('./routes/workouts')
 
@@ -11,6 +12,8 @@ const workoutRoutes = require('./routes/workouts')
 const app = express()
 
 // middleware
+
+app.use(cors())
 
 app.use(express.json())
 
