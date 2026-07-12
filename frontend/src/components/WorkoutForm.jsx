@@ -7,32 +7,35 @@ const WorkoutForm = () => {
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
+  const [emptyfields, setEmptyfields] = useState([]);
 
   const handleSubmit = async (e) => {
-     e.preventDefault()
+    e.preventDefault();
 
-     const workout = {title, load, reps}
+    const workout = { title, load, reps };
 
-     const response = await fetch("http://localhost:4000/api/workouts",{
-        method: 'POST',
-        body: JSON.stringify(workout),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-     })
-     const json = await response.json()
+    const response = await fetch("http://localhost:4000/api/workouts", {
+      method: "POST",
+      body: JSON.stringify(workout),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
 
-     if(!response.ok){
-        setError(json.error)
-     }
-     if(response.ok){
-        setTitle('')
-        setLoad('')
-        setReps('')
-        setError(null)
-        dispatch({ type: 'CREATE_WORKOUT', payload: json })
-     }
-  }
+    if (!response.ok) {
+      setError(json.error);
+      setEmptyfields(json.emptyfields);
+    }
+    if (response.ok) {
+      setTitle("");
+      setLoad("");
+      setReps("");
+      setError(null);
+      setEmptyfields([]);
+      dispatch({ type: "CREATE_WORKOUT", payload: json });
+    }
+  };
 
   return (
     <form action="" className="create" onSubmit={handleSubmit}>
@@ -43,23 +46,25 @@ const WorkoutForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        className={emptyfields.includes("title") ? "error" : ""}
       />
       <label>Load (in kg): </label>
       <input
         type="text"
         onChange={(e) => setLoad(e.target.value)}
         value={load}
+        className={emptyfields.includes("load") ? "error" : ""}
       />
       <label>Reps: </label>
       <input
         type="text"
         onChange={(e) => setReps(e.target.value)}
         value={reps}
+        className={emptyfields.includes("reps") ? "error" : ""}
       />
 
       <button>Add Workout</button>
       {error && <div className="error">{error}</div>}
-
     </form>
   );
 };
